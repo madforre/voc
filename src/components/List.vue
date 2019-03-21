@@ -15,30 +15,30 @@
                             <span class="ml-3 mr-3">|</span>
                             <p class="mb-4">{{item.updated_at}}</p>
                         </div>
-                        <h3 class="mb-4 title">제목 : {{item.title}} / 여기서 부터는 text-overflow test  여기서 부터는 text-overflow test 여기서 부터는 text-overflow test 여기서 부터는 text-overflow test</h3>
-                        <small class="body">내용 : {{item.contents}}</small>
+                        <h3 class="mb-4 title">소리 제목 - {{item.title}} / 여기서 부터는 text-overflow test 여기서 부터는 text-overflow test 여기서 부터는 text-overflow test 여기서 부터는 text-overflow test</h3>
+                        <small class="body">소리 내용 - {{item.contents}}</small>
                     </a>
                 </article>
             </div>
             <div id="adsWrap" class="mt-3" v-if="showAd($index)">
                 <aside>
-                    Sponsored
                     <a href="#">
-                        <b-card no-body class="overflow-hidden card-border" style="max-width: 100%">
-                            <b-row no-gutters>
-                                <b-col md="3" class="mt-3">
-                                    <img v-bind:src="getImage($index)" class="ad-image" />
-                                </b-col>
-                                <b-col md="9">
-                                    <b-card-body>
-                                        <h3 class="title">{{ads[($index + 1) / n - 1]['title']}}</h3>
-                                        <b-card-text>
-                                            <p class="body">{{ads[($index + 1) / n - 1]['contents']}}</p>
-                                        </b-card-text>
-                                    </b-card-body>
-                                </b-col>
-                            </b-row>
-                        </b-card>
+                        <div class="ad-header">
+                            <span>Sponsored</span>
+                        </div>
+                        <div class="ad-body">
+                            <div class="ad-image">
+                                <img v-bind:alt="getAlt($index)" v-bind:src="getImage($index)"/>
+                            </div>
+                            <div class="ad-detail">
+                                <div class="ad-title">
+                                    <h3>{{ads[($index + 1) / n - 1]['title']}} / 여기서 부터는 text-overflow test 여기서 부터는 text-overflow test 여기서 부터는 text-overflow test </h3>
+                                </div>
+                                <div class="ad-contents">
+                                    <p>{{ads[($index + 1) / n - 1]['contents']}}</p>
+                                </div>
+                            </div>
+                        </div>
                     </a>
                 </aside>
             </div>
@@ -70,14 +70,21 @@
                 if ((idx + 1) % this.n == 0) return true;
             },
             getImage(idx) {
-                const path = IMAGE_PATH + this.ads[(idx + 1) / this.n - 1]['img'];
+                const path = IMAGE_PATH + this.ads[(idx + 1) / this.n - 1] ['img'];
                 return path;
+            },
+            getAlt(idx) {
+                if ((idx + 1) % this.n == 0) {
+                    const alt = "ad_" + this.ads[(idx + 1) / this.n - 1] ['title'];
+                    return alt;
+                }
             }
         },
     }
 </script>
 
 <style lang="less">
+@import "../assets/_mixins";
 .list-item {
     margin: 20px 15px 20px 15px;
     text-align: left;
@@ -94,10 +101,10 @@
         .list-group-item {
             border: 0;
             .color {
-                color: #00c854;
+                color: green;
             }
             @media screen and (min-width: 320px) and (max-width: 768px) {
-                font-size: 12px;
+                font-size: 14px;
             }
         }
         .title {
@@ -118,35 +125,86 @@
     #adsWrap {
         box-sizing: border-box;
         width: 100%;
-        padding: 30px;
         box-shadow: 0 0 5px #00c854;
         border: 1px solid #ddd;
         @media screen and (min-width: 320px) and (max-width: 768px) {
-            font-size: 12px;
+            font-size: 14px;
         }
 
-        .ad-image {
+        a {
             display: block;
-            height: 200px;
+            padding: 30px;
+            .ad-header {
+                color: darkgreen;
+            }
+
+
+            .ad-body {
+                box-sizing: border-box;
+                margin: 20px 0 0 0;
+                .after-clear();
+
+                .ad-image {
+                    box-sizing: border-box;
+                    width: 320px;
+                    float: left;
+
+                    img {
+                        display: block;
+                        max-width: 100%;
+                    }
+                    @media screen and (min-width: 320px) and (max-width: 768px) {
+                        width: 100%;
+                    }
+                }
+
+                .ad-detail {
+                    box-sizing: border-box;
+                    max-width: 480px;
+                    padding: 10px 0 0 30px;
+                    float: left;
+
+                    .ad-title {
+                        h3 {
+                            margin: 0 0 20px 0;
+                            font-weight: bold;
+                        }
+                    }
+
+                    .ad-contents {
+                        p {
+                            font-size: 14px;
+                        }
+                    }
+
+                    @media screen and (min-width: 320px) and (max-width: 768px) {
+                        min-width: 320px;
+                        max-width: 100%;
+                        margin: 20px 0 0 0;
+                        padding: 0 0 0 0;
+
+                        .ad-title {
+                            h3 {
+                                overflow: hidden;
+                                white-space: nowrap;
+                                text-overflow: ellipsis;
+                            }
+                        }
+
+                        .ad-contents {
+                            p {
+                                overflow: hidden;
+                                white-space: nowrap;
+                                text-overflow: ellipsis;
+                            }
+                        }
+                    }
+                }
+
+            }
+
         }
 
-        .card-border {
-            border: 0;
-        }
-
-        .title {
-            font-weight: bold;
-            overflow:hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap
-        }
-
-        .body {
-            display: block;
-            overflow:hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap
-        }
     }
 }
 

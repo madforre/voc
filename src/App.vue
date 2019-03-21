@@ -72,11 +72,6 @@ export default {
   text-align: center;
   color: #2c3e50;
 
-  @media screen and (min-width: 769px) and (max-width: 1200px) {
-    width: 90%;
-    max-width: 768px;
-  }
-
   @media screen and (min-width: 320px) and (max-width: 768px) {
     width: 90%;
     min-width: 320px;
