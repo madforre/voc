@@ -3,7 +3,7 @@
         <header>
             <div class="logoWrap">
                 <h1>
-                    <img id="logo" alt="logo" title="logo" src="../../assets/comento_logo_green.svg">
+                    <img id="logo" alt="logo" title="logo" src="../../assets/logo_green.svg">
                 </h1>
             </div>
             <div class="titleWrap">
