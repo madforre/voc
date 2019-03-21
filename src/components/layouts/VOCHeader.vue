@@ -49,6 +49,8 @@
                 h2 {
                     font-size: 32px;
                     line-height: 38px;
+                    font-weight: bold;
+                    color: #555;
                     @media screen and (min-width: 320px) and (max-width: 768px) {
                         font-size: 24px;
                         line-height: 28px;

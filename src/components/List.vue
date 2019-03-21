@@ -1,26 +1,31 @@
 <template>
     <div id="listWrap">
-        <div class="list-item" v-for="(item, $index) in voc" :key="$index">
+        <div class="list-item" v-for="(item, index) in voc" :key="index">
             <div class="list-group">
                 <article>
-                    <a href="#" class="list-group-item list-group-item-action">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-4 color" v-show="item.category_no == 1">apple</h5>
-                            <h5 class="mb-4 color" v-show="item.category_no == 2">banana</h5>
-                            <h5 class="mb-4 color" v-show="item.category_no == 3">coconut</h5>
-                            <small class="color">{{item.no}}번째 외침</small>
-                        </div>
-                        <div class="d-flex w-100 justify-content-start">
-                            <p class="mb-4">{{item.email}}</p>
-                            <span class="ml-3 mr-3">|</span>
-                            <p class="mb-4">{{item.updated_at}}</p>
-                        </div>
-                        <h3 class="mb-4 title">소리 제목 - {{item.title}} / 여기서 부터는 text-overflow test 여기서 부터는 text-overflow test 여기서 부터는 text-overflow test 여기서 부터는 text-overflow test</h3>
-                        <small class="body">소리 내용 - {{item.contents}}</small>
-                    </a>
+                    <ol>
+                        <li>
+                            <a href="#" class="list-group-item list-group-item-action">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-4 color" v-show="item.category_no == 1">apple</h5>
+                                    <h5 class="mb-4 color" v-show="item.category_no == 2">banana</h5>
+                                    <h5 class="mb-4 color" v-show="item.category_no == 3">coconut</h5>
+                                    <small class="color">{{item.no}}번째 외침</small>
+                                </div>
+                                <div class="d-flex w-100 justify-content-start">
+                                    <p class="mb-4">{{item.email}}</p>
+                                    <span class="ml-3 mr-3">|</span>
+                                    <p class="mb-4">{{item.updated_at}}</p>
+                                </div>
+                                <h3 class="mb-4 title">소리 제목 - {{item.title}} / 여기서 부터는 text-overflow test 여기서 부터는 text-overflow test 여기서 부터는 text-overflow test 여기서 부터는 text-overflow test</h3>
+                                <small class="body">소리 내용 - {{item.contents}}</small>
+                            </a>
+                        </li>
+                    </ol>
                 </article>
             </div>
-            <div id="adsWrap" class="mt-3" v-if="showAd($index)">
+
+            <div id="adsWrap" class="mt-3" v-if="showAd(index)">
                 <aside>
                     <a href="#">
                         <div class="ad-header">
@@ -28,14 +33,14 @@
                         </div>
                         <div class="ad-body">
                             <div class="ad-image">
-                                <img v-bind:alt="getAlt($index)" v-bind:src="getImage($index)"/>
+                                <img v-bind:alt="getAlt(index)" v-bind:src="getImage(index)"/>
                             </div>
                             <div class="ad-detail">
                                 <div class="ad-title">
-                                    <h3>{{ads[($index + 1) / n - 1]['title']}} / 여기서 부터는 text-overflow test 여기서 부터는 text-overflow test 여기서 부터는 text-overflow test </h3>
+                                    <h3>{{ads[(index + 1) / n - 1]['title']}} / 여기서 부터는 text-overflow test 여기서 부터는 text-overflow test 여기서 부터는 text-overflow test </h3>
                                 </div>
                                 <div class="ad-contents">
-                                    <p>{{ads[($index + 1) / n - 1]['contents']}}</p>
+                                    <p>{{ads[(index + 1) / n - 1]['contents']}}</p>
                                 </div>
                             </div>
                         </div>
@@ -70,12 +75,12 @@
                 if ((idx + 1) % this.n == 0) return true;
             },
             getImage(idx) {
-                const path = IMAGE_PATH + this.ads[(idx + 1) / this.n - 1] ['img'];
+                const path = IMAGE_PATH + this.ads[(idx + 1) / this.n - 1]['img'];
                 return path;
             },
             getAlt(idx) {
                 if ((idx + 1) % this.n == 0) {
-                    const alt = "ad_" + this.ads[(idx + 1) / this.n - 1] ['title'];
+                    const alt = "ad_" + this.ads[(idx + 1) / this.n - 1]['title'];
                     return alt;
                 }
             }
@@ -116,7 +121,7 @@
 
         .body {
             display: block;
-            overflow:hidden;
+            overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap
         }
@@ -125,7 +130,7 @@
     #adsWrap {
         box-sizing: border-box;
         width: 100%;
-        box-shadow: 0 0 5px #00c854;
+        box-shadow: 0 0 3px #00c854;
         border: 1px solid #ddd;
         @media screen and (min-width: 320px) and (max-width: 768px) {
             font-size: 14px;
@@ -153,10 +158,20 @@
                         display: block;
                         max-width: 100%;
                     }
+
+                    @media screen and (min-width: 769px) and (max-width: 900px) {
+                        float: none;
+                        width: 75%;
+                        margin: 10px auto 0 auto;
+                    }
+
                     @media screen and (min-width: 320px) and (max-width: 768px) {
                         width: 100%;
                     }
+
                 }
+
+
 
                 .ad-detail {
                     box-sizing: border-box;
@@ -177,7 +192,7 @@
                         }
                     }
 
-                    @media screen and (min-width: 320px) and (max-width: 768px) {
+                    @media screen and (min-width: 320px) and (max-width: 900px) {
                         min-width: 320px;
                         max-width: 100%;
                         margin: 20px 0 0 0;

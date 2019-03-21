@@ -43,7 +43,7 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background-color: rgba(0, 0, 0, .5);
+        background-color: rgba(0, 0, 0, 0.7);
         display: table;
         transition: opacity .3s ease;
 
@@ -54,9 +54,9 @@
     }
 
     .modal-container {
-        width: 300px;
+        width: 310px;
         margin: 0 auto;
-        padding: 20px 30px;
+        padding: 10px 0 10px 0;
         background-color: #fff;
         border-radius: 2px;
         box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
@@ -66,11 +66,11 @@
 
         .modal-header h3 {
             margin-top: 0;
-            color: #42b983;
+            font-weight: bold;
         }
         .modal-body {
             margin: 20px 0;
-            color: limegreen;
+            color: #00c854;
         }
         .modal-footer {
             text-align: right;

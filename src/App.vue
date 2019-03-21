@@ -1,18 +1,24 @@
 <template>
   <div id="app">
     <VOCHeader/>
-    <ListFilter/>
+    <ListFilter v-on:updateList="updateList"/>
     <List :voc="voc" :ads="ads"/>
   </div>
 </template>
 
 <script>
+// components
 import VOCHeader from './components/layouts/VOCHeader';
 import ListFilter from './components/ListFilter';
 import List from './components/List';
+
+// constants
 import resource from './constants/resource';
-import axios from 'axios';
 const { LIST, ADS } = resource;
+
+// axios
+import axios from 'axios';
+
 export default {
   data() {
     return {
@@ -51,6 +57,10 @@ export default {
           this.ads.push(request[i]);
         }
       }
+    },
+    updateList(category) {
+      const val = category;
+      console.log(val);
     }
   },
   components: {
@@ -71,6 +81,12 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+
+
+  @media screen and (min-width: 769px) and (max-width: 900px) {
+    width: 90%;
+    max-width: 768px;
+  }
 
   @media screen and (min-width: 320px) and (max-width: 768px) {
     width: 90%;

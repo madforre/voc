@@ -1,23 +1,71 @@
 <template>
     <div id="filterWrap">
         <nav>
-            <button class="filter-btn" type="button">필터</button>
+            <button class="filter-btn" type="button" @click="openFilter">필터</button>
             <div class="orderWrap">
                 <span class="asc active">오름차순</span>
                 <span class="desc">내림차순</span>
             </div>
         </nav>
+        <!-- use the modal component, pass in the prop -->
+        <modal v-if="showModal">
+            <h3 slot="header">카테고리 선택</h3>
+            <div slot="body">
+                <div class="check-box-wrap">
+                    <div v-for="(item, index) in box" :key="index" class="check-box">
+                        <label :for="item.name">{{item.name}}</label>
+                        <input type="checkbox" :id="item.name" v-model="item.checked">
+                    </div>
+                    <br>
+                    <span class="checked">선택됨: {{checkedNames}} </span>
+                </div>
+            </div>
+            <span slot="footer" @click="closeFilter" class="exit">
+              확인
+            </span>
+        </modal>
     </div>
 </template>
 
 <script>
-    // import resource from '../constants/resource';
-    // const { CATEGORY } = resource;
-    export default {
-        name: 'ListFilter',
-        props: {
+import Modal from './common/Modal.vue'
+export default {
+    name: 'ListFilter',
+    data() {
+        return {
+            showModal: false,
+            box: [
+                { name: "apple", checked: true },
+                { name: "banana", checked: true },
+                { name: "coconut", checked: true },
+            ],
         }
+    },
+    computed: {
+        checkedNames () {
+            return this.box.filter(item => item.checked).map(name => name.name)
+        }
+    },
+    props: [],
+    mounted() {
+    },
+    methods: {
+        async openFilter() {
+            this.showModal = await !this.showModal;
+            const inputs = await document.querySelectorAll('input.check-box');
+            await console.log(inputs);
+        },
+        closeFilter() {
+            this.showModal = !this.showModal;
+
+            const checked = "hi";
+            this.$emit('updateList', checked)
+        }
+    },
+    components: {
+        Modal: Modal
     }
+}
 </script>
 
 <style lang="less" scoped>
@@ -74,6 +122,28 @@
             }
         }
 
+    }
+
+    .check-box-wrap {
+        label {
+            color: #00c854;
+            margin-right: 5px;
+        }
+        .check-box {
+            display: inline-block;
+            margin: 10px;
+        }
+        .checked {
+            color: black;
+            display: block;
+            text-align: center;
+            font-size: 12px;
+        }
+    }
+
+
+    .exit {
+        cursor: pointer;
     }
 }
 </style>
