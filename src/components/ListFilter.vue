@@ -1,10 +1,12 @@
 <template>
     <div id="filterWrap">
-        <button class="filter-btn" type="button">필터</button>
-        <div class="orderWrap">
-            <span class="asc active">오름차순</span>
-            <span class="desc">내림차순</span>
-        </div>
+        <nav>
+            <button class="filter-btn" type="button">필터</button>
+            <div class="orderWrap">
+                <span class="asc active">오름차순</span>
+                <span class="desc">내림차순</span>
+            </div>
+        </nav>
     </div>
 </template>
 
@@ -20,8 +22,10 @@
 
 <style lang="less" scoped>
 #filterWrap {
-    display: flex;
-    margin: 0 auto;
+    nav {
+        display: flex;
+        margin: 0 auto;
+    }
 
     button.filter-btn  {
         display: block;

@@ -17,8 +17,7 @@ export default {
   data() {
     return {
       voc: [],
-      ads: [],
-      list: []
+      ads: []
     }
   },
   created() {
@@ -52,7 +51,6 @@ export default {
           this.ads.push(request[i]);
         }
       }
-      console.log(this);
     }
   },
   components: {
