@@ -41,6 +41,7 @@
                         height: 38px;
                         @media screen and (min-width: 320px) and (max-width: 768px) {
                             height: 28px;
+                            margin-right: 3px;
                         }
                     }
                 }
