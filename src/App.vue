@@ -73,9 +73,9 @@ export default {
       }
     },
 
-    infiniteHandler($state) {
-      this.fetchAds(this.page);
-      axios.get(LIST, {
+    async infiniteHandler($state) {
+      await this.fetchAds(this.page);
+      await axios.get(LIST, {
         params: {
           page: this.page,
           order: this.order,
