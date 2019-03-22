@@ -124,14 +124,15 @@
                 font-size: 14px;
             }
         }
-        .title {
+        h3.title {
             font-weight: bold;
             overflow:hidden;
             text-overflow: ellipsis;
             white-space: nowrap
         }
 
-        .body {
+        small.body {
+            height: 20px;
             display: block;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -205,7 +206,6 @@
                     }
 
                     @media screen and (min-width: 320px) and (max-width: 900px) {
-                        min-width: 320px;
                         max-width: 100%;
                         margin: 20px 0 0 0;
                         padding: 0 0 0 0;
@@ -220,6 +220,7 @@
 
                         .ad-contents {
                             p {
+                                height: 20px;
                                 overflow: hidden;
                                 white-space: nowrap;
                                 text-overflow: ellipsis;

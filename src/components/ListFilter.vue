@@ -114,7 +114,7 @@ export default {
             cursor: pointer;
             font-size: 18px;
             line-height: 40px;
-            font-weight: 500;
+            font-weight: bold;
 
             &.asc {
                 margin-right: 20px;
