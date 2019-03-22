@@ -32,15 +32,15 @@
                             <span>Sponsored</span>
                         </div>
                         <div class="ad-body">
-                            <div class="ad-image">
+             `               <div class="ad-image">
                                 <img v-bind:alt="getAlt(index)" v-bind:src="getImage(index)"/>
                             </div>
                             <div class="ad-detail">
                                 <div class="ad-title">
-                                    <h3>{{ads[(index + 1) / n - 1]['title']}} / 여기서부터는 text-overflow test 여기서부터는 text-overflow test 여기서부터는 text-overflow test </h3>
+                                    <h3>{{getValue(index, 'title')}} / 여기서부터는 text-overflow test 여기서부터는 text-overflow test 여기서부터는 text-overflow test </h3>
                                 </div>
                                 <div class="ad-contents">
-                                    <p>{{ads[(index + 1) / n - 1]['contents']}}</p>
+                                    <p>{{getValue(index, 'contents')}}</p>
                                 </div>
                             </div>
                         </div>
@@ -58,7 +58,8 @@
     export default {
         data() {
             return {
-                n: 4
+                n: 4,
+
             }
         },
         props: ['voc','ads'],
@@ -68,16 +69,24 @@
         },
         methods: {
             showAd(idx) {
-                if ((idx + 1) % this.n == 0) return true;
+                if ((idx + 1) % this.n === 0) {
+                    return true;
+                }
             },
             getImage(idx) {
                 const path = IMAGE_PATH + this.ads[(idx + 1) / this.n - 1]['img'];
-                return path;
+                if (path) return path
             },
             getAlt(idx) {
-                if ((idx + 1) % this.n == 0) {
+                if ((idx + 1) % this.n === 0) {
                     const alt = "ad_" + this.ads[(idx + 1) / this.n - 1]['title'];
-                    return alt;
+                    if (alt) return alt;
+                }
+            },
+            getValue(idx, key) {
+                if ((idx + 1) % this.n === 0) {
+                    const value = this.ads[(idx + 1) / this.n - 1][key];
+                    if (value) return value;
                 }
             },
         },

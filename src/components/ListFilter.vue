@@ -34,7 +34,6 @@ export default {
     data() {
         return {
             showModal: false,
-            order : "asc"
         }
     },
     computed: {
@@ -45,7 +44,7 @@ export default {
             return this.box.filter(item => item.checked).map(item => item.no);
         }
     },
-    props: ["box"],
+    props: ["box", "asc"],
     mounted() {
     },
     methods: {
@@ -62,17 +61,16 @@ export default {
                 if (!c.match(/active/)) {
                     document.querySelector('.asc').setAttribute("class", "asc active");
                     document.querySelector('.desc').setAttribute("class", "desc");
-                    this.order = "asc";
+                    this.asc = true;
                 }
             } else if (c === "desc") {
                 if (!c.match(/active/)) {
                     document.querySelector('.desc').setAttribute("class", "desc active");
                     document.querySelector('.asc').setAttribute("class", "asc");
-                    this.order = "desc";
+                    this.asc = false;
                 }
             }
-
-            this.$emit('orderList', this.order)
+            this.$emit('orderList', this.asc)
         },
 
     },

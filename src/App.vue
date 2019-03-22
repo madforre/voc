@@ -1,9 +1,9 @@
 <template>
   <div id="app">
     <VOCHeader/>
-    <ListFilter v-on:updateList="updateList" v-on:orderList="orderList" :box="check_box"/>
+    <ListFilter v-on:updateList="updateList" v-on:orderList="orderList" :box="check_box" :asc="asc"/>
     <List :voc="voc" :ads="ads"/>
-    <infinite-loading identifier="infiniteId" @infinite="infiniteHandler"></infinite-loading>
+    <infinite-loading ref="infiniteLoading" identifier="infiniteId" @infinite="infiniteHandler"></infinite-loading>
   </div>
 </template>
 
@@ -26,7 +26,7 @@ export default {
       page: 1,
       voc: [],
       ads: [],
-      order: 'asc',
+      asc: true,
       category_no: [],
       check_box: [],
       infiniteId: +new Date(),
@@ -57,8 +57,8 @@ export default {
       this.category_no = category;
       this.changeType();
     },
-    orderList(order) {
-      this.order = order;
+    orderList(boolean) {
+      this.asc = boolean;
       this.changeType();
     },
     async fetchAds(page) {
@@ -72,16 +72,16 @@ export default {
         }
       }
     },
-
     async infiniteHandler($state) {
       await this.fetchAds(this.page);
       await axios.get(LIST, {
         params: {
           page: this.page,
-          order: this.order,
+          order: this.asc ? 'asc' : 'desc',
           category: this.category_no,
         },
       }).then(({ data }) => {
+        console.log(data.list);
         if (data.list.length) {
           this.page += 1;
           this.voc.push(...data.list);
@@ -94,14 +94,18 @@ export default {
     changeType() {
       this.page = 1;
       this.voc = [];
+      this.ads = [];
       this.infiniteId += 1;
+      this.$nextTick(() => {
+        this.$refs.infiniteLoading.$emit('$InfiniteLoading:reset');
+      });
     },
   },
   components: {
     VOCHeader,
     ListFilter,
     List
-  }
+  },
 }
 </script>
 
