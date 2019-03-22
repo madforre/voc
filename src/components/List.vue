@@ -1,6 +1,6 @@
 <template>
     <div id="listWrap">
-        <div class="list-item" v-for="(item, index) in voc" :key="index">
+        <div class="list-item" v-for="(item, index) in listObj.voc" :key="index">
             <div class="list-group">
                 <article>
                     <ol>
@@ -10,7 +10,7 @@
                                     <h5 class="mb-4 color" v-show="item.category_no == 1">apple</h5>
                                     <h5 class="mb-4 color" v-show="item.category_no == 2">banana</h5>
                                     <h5 class="mb-4 color" v-show="item.category_no == 3">coconut</h5>
-                                    <small class="color">{{index + 1 }}</small>
+                                    <small class="color">소리 {{item.no}}</small>
                                 </div>
                                 <div class="d-flex w-100 justify-content-start">
                                     <p class="mb-4">{{item.email}}</p>
@@ -32,15 +32,15 @@
                             <span>Sponsored</span>
                         </div>
                         <div class="ad-body">
-             `               <div class="ad-image">
-                                <img v-bind:alt="getAlt(index)" v-bind:src="getImage(index)"/>
+                            <div class="ad-image">
+                                <img v-bind:alt="getAlt(index, listObj.ads)" v-bind:src="getImage(index, listObj.ads)"/>
                             </div>
                             <div class="ad-detail">
                                 <div class="ad-title">
-                                    <h3>{{getValue(index, 'title')}} / 여기서부터는 text-overflow test 여기서부터는 text-overflow test 여기서부터는 text-overflow test </h3>
+                                    <h3>{{getValue(index, 'title', listObj.ads)}} / 여기서부터는 text-overflow test 여기서부터는 text-overflow test 여기서부터는 text-overflow test </h3>
                                 </div>
                                 <div class="ad-contents">
-                                    <p>{{getValue(index, 'contents')}}</p>
+                                    <p>{{getValue(index, 'contents', listObj.ads)}}</p>
                                 </div>
                             </div>
                         </div>
@@ -63,6 +63,11 @@
             }
         },
         props: ['voc','ads'],
+        computed: {
+            listObj () {
+                return {voc: this.voc, ads: this.ads};
+            },
+        },
         created() {
         },
         mounted() {
@@ -73,19 +78,19 @@
                     return true;
                 }
             },
-            getImage(idx) {
-                const path = IMAGE_PATH + this.ads[(idx + 1) / this.n - 1]['img'];
+            getImage(idx, ads) {
+                const path = IMAGE_PATH + ads[(idx + 1) / this.n - 1]['img'];
                 if (path) return path
             },
-            getAlt(idx) {
+            getAlt(idx, ads) {
                 if ((idx + 1) % this.n === 0) {
-                    const alt = "ad_" + this.ads[(idx + 1) / this.n - 1]['title'];
+                    const alt = "ad_" + ads[(idx + 1) / this.n - 1]['title'];
                     if (alt) return alt;
                 }
             },
-            getValue(idx, key) {
+            getValue(idx, key, ads) {
                 if ((idx + 1) % this.n === 0) {
-                    const value = this.ads[(idx + 1) / this.n - 1][key];
+                    const value = ads[(idx + 1) / this.n - 1][key];
                     if (value) return value;
                 }
             },

@@ -18,6 +18,8 @@
                     </div>
                     <br>
                     <span class="checked">선택됨: {{checkedNames}} </span>
+                    <br>
+                    <span>{{required}}</span>
                 </div>
             </div>
             <span slot="footer" @click="closeFilter" class="exit">
@@ -34,6 +36,7 @@ export default {
     data() {
         return {
             showModal: false,
+            required: '',
         }
     },
     computed: {
@@ -52,8 +55,13 @@ export default {
             this.showModal = !this.showModal;
         },
         closeFilter() {
-            this.showModal = !this.showModal;
-            this.$emit('updateList', this.checkedNo)
+            if (this.checkedNames.length > 0) {
+                this.required = '';
+                this.showModal = !this.showModal;
+                this.$emit('updateList', this.checkedNo)
+            } else {
+                this.required = '카테고리를 선택해주세요.';
+            }
         },
         handleOrder(e) {
             const c = e.target.className;

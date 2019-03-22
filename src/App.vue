@@ -70,6 +70,17 @@ export default {
         for (let i = 0; i < request.length; i++) {
           this.ads.push(request[i]);
         }
+      } else {
+        const none = {
+          contents: '',
+          created_at: '',
+          img: '',
+          no: '',
+          title: '',
+          updated_at: ''
+        };
+        this.ads.push(none);
+        this.ads.push(none);
       }
     },
     async infiniteHandler($state) {
@@ -77,7 +88,7 @@ export default {
       await axios.get(LIST, {
         params: {
           page: this.page,
-          order: this.asc ? 'asc' : 'desc',
+          ord: this.asc ? 'asc' : 'desc',
           category: this.category_no,
         },
       }).then(({ data }) => {
