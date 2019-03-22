@@ -45,6 +45,6 @@ yarn 1.13.0
 
 vue-cli 3.5.1
 
-### 크로스 브라우징 테스트
+### 호환
 
 Edge / IE 11 / Chrome / Firefox / 안드로이드 / 아이폰
