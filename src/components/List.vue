@@ -10,14 +10,14 @@
                                     <h5 class="mb-4 color" v-show="item.category_no == 1">apple</h5>
                                     <h5 class="mb-4 color" v-show="item.category_no == 2">banana</h5>
                                     <h5 class="mb-4 color" v-show="item.category_no == 3">coconut</h5>
-                                    <small class="color">{{item.no}}번째 외침</small>
+                                    <small class="color">{{index + 1 }}</small>
                                 </div>
                                 <div class="d-flex w-100 justify-content-start">
                                     <p class="mb-4">{{item.email}}</p>
                                     <span class="ml-3 mr-3">|</span>
                                     <p class="mb-4">{{item.updated_at}}</p>
                                 </div>
-                                <h3 class="mb-4 title">소리 제목 - {{item.title}} / 여기서 부터는 text-overflow test 여기서 부터는 text-overflow test 여기서 부터는 text-overflow test 여기서 부터는 text-overflow test</h3>
+                                <h3 class="mb-4 title">소리 제목 - {{item.title}} / 여기서부터는 text-overflow test 여기서부터는 text-overflow test 여기서부터는 text-overflow test 여기서부터는 text-overflow test</h3>
                                 <small class="body">소리 내용 - {{item.contents}}</small>
                             </a>
                         </li>
@@ -37,7 +37,7 @@
                             </div>
                             <div class="ad-detail">
                                 <div class="ad-title">
-                                    <h3>{{ads[(index + 1) / n - 1]['title']}} / 여기서 부터는 text-overflow test 여기서 부터는 text-overflow test 여기서 부터는 text-overflow test </h3>
+                                    <h3>{{ads[(index + 1) / n - 1]['title']}} / 여기서부터는 text-overflow test 여기서부터는 text-overflow test 여기서부터는 text-overflow test </h3>
                                 </div>
                                 <div class="ad-contents">
                                     <p>{{ads[(index + 1) / n - 1]['contents']}}</p>
@@ -48,10 +48,6 @@
                 </aside>
             </div>
         </div>
-        <!--<div v-for="(item, $index) in props.voc" :key="$index">-->
-            <!--&lt;!&ndash; Hacker News item loop &ndash;&gt;-->
-        <!--</div>-->
-        <!--<infinite-loading @infinite="infiniteHandler"></infinite-loading>-->
     </div>
 </template>
 
@@ -83,7 +79,7 @@
                     const alt = "ad_" + this.ads[(idx + 1) / this.n - 1]['title'];
                     return alt;
                 }
-            }
+            },
         },
     }
 </script>

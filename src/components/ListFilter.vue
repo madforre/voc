@@ -3,8 +3,8 @@
         <nav>
             <button class="filter-btn" type="button" @click="openFilter">필터</button>
             <div class="orderWrap">
-                <span class="asc active">오름차순</span>
-                <span class="desc">내림차순</span>
+                <span class="asc active" @click="handleOrder">오름차순</span>
+                <span class="desc" @click="handleOrder">내림차순</span>
             </div>
         </nav>
         <!-- use the modal component, pass in the prop -->
@@ -34,33 +34,47 @@ export default {
     data() {
         return {
             showModal: false,
-            box: [
-                { name: "apple", checked: true },
-                { name: "banana", checked: true },
-                { name: "coconut", checked: true },
-            ],
+            order : "asc"
         }
     },
     computed: {
         checkedNames () {
-            return this.box.filter(item => item.checked).map(name => name.name)
+            return this.box.filter(item => item.checked).map(item => item.name)
+        },
+        checkedNo () {
+            return this.box.filter(item => item.checked).map(item => item.no);
         }
     },
-    props: [],
+    props: ["box"],
     mounted() {
     },
     methods: {
-        async openFilter() {
-            this.showModal = await !this.showModal;
-            const inputs = await document.querySelectorAll('input.check-box');
-            await console.log(inputs);
+        openFilter() {
+            this.showModal = !this.showModal;
         },
         closeFilter() {
             this.showModal = !this.showModal;
+            this.$emit('updateList', this.checkedNo)
+        },
+        handleOrder(e) {
+            const c = e.target.className;
+            if (c === "asc") {
+                if (!c.match(/active/)) {
+                    document.querySelector('.asc').setAttribute("class", "asc active");
+                    document.querySelector('.desc').setAttribute("class", "desc");
+                    this.order = "asc";
+                }
+            } else if (c === "desc") {
+                if (!c.match(/active/)) {
+                    document.querySelector('.desc').setAttribute("class", "desc active");
+                    document.querySelector('.asc').setAttribute("class", "asc");
+                    this.order = "desc";
+                }
+            }
 
-            const checked = "hi";
-            this.$emit('updateList', checked)
-        }
+            this.$emit('orderList', this.order)
+        },
+
     },
     components: {
         Modal: Modal
@@ -128,10 +142,15 @@ export default {
         label {
             color: #00c854;
             margin-right: 5px;
+            cursor: pointer;
         }
         .check-box {
             display: inline-block;
             margin: 10px;
+
+            input {
+                cursor: pointer;
+            }
         }
         .checked {
             color: black;
@@ -140,7 +159,6 @@ export default {
             font-size: 12px;
         }
     }
-
 
     .exit {
         cursor: pointer;

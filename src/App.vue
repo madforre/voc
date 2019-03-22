@@ -1,8 +1,9 @@
 <template>
   <div id="app">
     <VOCHeader/>
-    <ListFilter v-on:updateList="updateList"/>
+    <ListFilter v-on:updateList="updateList" v-on:orderList="orderList" :box="check_box"/>
     <List :voc="voc" :ads="ads"/>
+    <infinite-loading identifier="infiniteId" @infinite="infiniteHandler"></infinite-loading>
   </div>
 </template>
 
@@ -14,7 +15,7 @@ import List from './components/List';
 
 // constants
 import resource from './constants/resource';
-const { LIST, ADS } = resource;
+const { LIST, CATEGORY, ADS } = resource;
 
 // axios
 import axios from 'axios';
@@ -22,8 +23,13 @@ import axios from 'axios';
 export default {
   data() {
     return {
+      page: 1,
       voc: [],
-      ads: []
+      ads: [],
+      order: 'asc',
+      category_no: [],
+      check_box: [],
+      infiniteId: +new Date(),
     }
   },
   created() {
@@ -33,22 +39,30 @@ export default {
   },
   methods: {
     initData() {
-      this.fetchVOC();
-      this.fetchAds();
+      this.fetchCategory();
     },
-    async fetchVOC() {
-      const query_string = `page=1&ord=asc`;
-      const request = await axios.get(LIST + "?" + query_string)
+    async fetchCategory() {
+      const request = await axios.get(CATEGORY)
               .then(response => response.data.list)
               .catch(error => error);
       if (request.length > 0) {
         for (let i = 0; i < request.length; i++) {
-          this.voc.push(request[i]);
+          request[i]['checked'] = true;
+          this.check_box.push(request[i]);
         }
       }
+      this.category_no = this.check_box.filter(item => item.checked).map(item => item.no);
     },
-    async fetchAds() {
-      const query_string = `page=1&limit=2`;
+    updateList(category) {
+      this.category_no = category;
+      this.changeType();
+    },
+    orderList(order) {
+      this.order = order;
+      this.changeType();
+    },
+    async fetchAds(page) {
+      const query_string = `page=${page}&limit=2`;
       const request = await axios.get(ADS + "?" + query_string)
               .then(response => response.data.list)
               .catch(error => error);
@@ -58,10 +72,30 @@ export default {
         }
       }
     },
-    updateList(category) {
-      const val = category;
-      console.log(val);
-    }
+
+    infiniteHandler($state) {
+      this.fetchAds(this.page);
+      axios.get(LIST, {
+        params: {
+          page: this.page,
+          order: this.order,
+          category: this.category_no,
+        },
+      }).then(({ data }) => {
+        if (data.list.length) {
+          this.page += 1;
+          this.voc.push(...data.list);
+          $state.loaded();
+        } else {
+          $state.complete();
+        }
+      });
+    },
+    changeType() {
+      this.page = 1;
+      this.voc = [];
+      this.infiniteId += 1;
+    },
   },
   components: {
     VOCHeader,
@@ -81,7 +115,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-
 
   @media screen and (min-width: 769px) and (max-width: 900px) {
     width: 90%;
