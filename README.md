@@ -26,6 +26,6 @@
 완료
 
 
-#### 이슈
+### 이슈
 
 - Vue-Infinite-Loading @change를 통해 리셋하지 못해 deprecated 된 기능을 이용하여 구현
