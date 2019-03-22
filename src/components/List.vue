@@ -3,25 +3,21 @@
         <div class="list-item" v-for="(item, index) in listObj.voc" :key="index">
             <div class="list-group">
                 <article>
-                    <ol>
-                        <li>
-                            <a href="#" class="list-group-item list-group-item-action">
-                                <div class="d-flex w-100 justify-content-between">
-                                    <h5 class="mb-4 color" v-show="item.category_no == 1">apple</h5>
-                                    <h5 class="mb-4 color" v-show="item.category_no == 2">banana</h5>
-                                    <h5 class="mb-4 color" v-show="item.category_no == 3">coconut</h5>
-                                    <small class="color">소리 {{item.no}}</small>
-                                </div>
-                                <div class="d-flex w-100 justify-content-start">
-                                    <p class="mb-4">{{item.email}}</p>
-                                    <span class="ml-3 mr-3">|</span>
-                                    <p class="mb-4">{{item.updated_at}}</p>
-                                </div>
-                                <h3 class="mb-4 title">소리 제목 - {{item.title}} / 여기서부터는 text-overflow test 여기서부터는 text-overflow test 여기서부터는 text-overflow test 여기서부터는 text-overflow test</h3>
-                                <small class="body">소리 내용 - {{item.contents}}</small>
-                            </a>
-                        </li>
-                    </ol>
+                    <a href="#" class="list-group-item list-group-item-action">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-4 color" v-show="item.category_no == 1">apple</h5>
+                            <h5 class="mb-4 color" v-show="item.category_no == 2">banana</h5>
+                            <h5 class="mb-4 color" v-show="item.category_no == 3">coconut</h5>
+                            <small class="color">소리 {{item.no}}</small>
+                        </div>
+                        <div class="d-flex w-100 justify-content-start">
+                            <p class="mb-4">{{item.email}}</p>
+                            <span class="ml-3 mr-3">|</span>
+                            <p class="mb-4">{{item.updated_at}}</p>
+                        </div>
+                        <h3 class="mb-4 title">소리 제목 - {{item.title}} / 여기서부터는 text-overflow test 여기서부터는 text-overflow test 여기서부터는 text-overflow test 여기서부터는 text-overflow test</h3>
+                        <small class="body">소리 내용 - {{item.contents}}</small>
+                    </a>
                 </article>
             </div>
 
