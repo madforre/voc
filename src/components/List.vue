@@ -79,8 +79,10 @@
                 }
             },
             getImage(idx, ads) {
-                const path = IMAGE_PATH + ads[(idx + 1) / this.n - 1]['img'];
-                if (path) return path
+                if ((idx + 1) % this.n === 0) {
+                    const path = IMAGE_PATH + ads[(idx + 1) / this.n - 1]['img'];
+                    if (path) return path
+                }
             },
             getAlt(idx, ads) {
                 if ((idx + 1) % this.n === 0) {

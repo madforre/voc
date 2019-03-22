@@ -65,20 +65,21 @@ export default {
         },
         handleOrder(e) {
             const c = e.target.className;
+            let asc = this.asc;
             if (c === "asc") {
                 if (!c.match(/active/)) {
                     document.querySelector('.asc').setAttribute("class", "asc active");
                     document.querySelector('.desc').setAttribute("class", "desc");
-                    this.asc = true;
+                    asc = true;
                 }
             } else if (c === "desc") {
                 if (!c.match(/active/)) {
                     document.querySelector('.desc').setAttribute("class", "desc active");
                     document.querySelector('.asc').setAttribute("class", "asc");
-                    this.asc = false;
+                    asc = false;
                 }
             }
-            this.$emit('orderList', this.asc)
+            this.$emit('orderList', asc)
         },
 
     },

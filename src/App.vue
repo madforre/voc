@@ -62,25 +62,27 @@ export default {
       this.changeType();
     },
     async fetchAds(page) {
-      const query_string = `page=${page}&limit=2`;
-      const request = await axios.get(ADS + "?" + query_string)
-              .then(response => response.data.list)
-              .catch(error => error);
-      if (request.length > 0) {
-        for (let i = 0; i < request.length; i++) {
-          this.ads.push(request[i]);
-        }
-      } else {
+      if (this.ads.length >= 30) {
         const none = {
-          contents: '',
-          created_at: '',
-          img: '',
-          no: '',
-          title: '',
-          updated_at: ''
+          contents: 'none',
+          created_at: 'none',
+          img: 'test3.png',
+          no: 0,
+          title: '광고가 다떨어짐',
+          updated_at: 'none'
         };
         this.ads.push(none);
         this.ads.push(none);
+      } else {
+        const query_string = `page=${page}&limit=4`;
+        const request = await axios.get(ADS + "?" + query_string)
+                .then(response => response.data.list)
+                .catch(error => error);
+        if (request.length > 0) {
+          for (let i = 0; i < request.length; i++) {
+            this.ads.push(request[i]);
+          }
+        }
       }
     },
     async infiniteHandler($state) {
@@ -92,7 +94,6 @@ export default {
           category: this.category_no,
         },
       }).then(({ data }) => {
-        console.log(data.list);
         if (data.list.length) {
           this.page += 1;
           this.voc.push(...data.list);
